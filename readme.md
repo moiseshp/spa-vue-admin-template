@@ -1,4 +1,4 @@
-# Scraping ( Laravel + Goutte Library )
+# Vue SPA - Admin Template 
 
 Admin Template - SPA Vue + Vuetify
 

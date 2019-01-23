@@ -1,0 +1,26 @@
+// main.styl
+$body-font-family = 'Roboto', sans-serif
+
+@import '~vuetify/src/stylus/main.styl'
+
+#app,
+.theme--light.v-sheet,
+.theme--light.v-input:not(.v-input--is-disabled) input, .theme--light.v-input:not(.v-input--is-disabled) textarea
+    color: $blue-grey.darken-4
+
+.theme--light.v-label,
+.theme--light.v-messages,
+    color: $blue-grey.darken-1
+
+.theme--light.v-text-field--outline > .v-input__control > .v-input__slot,
+.theme--light.v-text-field > .v-input__control > .v-input__slot:before
+    border-color: $blue-grey.lighten-4
+
+.theme--light.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot:hover
+    border-color: $blue-grey.lighten-1
+
+.theme--light.v-text-field--outline.v-input--is-focused > .v-input__control > .v-input__slot
+    border-color: var(--v-primary-base)
+
+.v-sheet
+    // border-radius: 8px
