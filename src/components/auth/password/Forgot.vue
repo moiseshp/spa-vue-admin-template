@@ -3,7 +3,7 @@
     <layout-auth :alert="alert">
 
         <h2 class="text-xs-center headline font-weight-light mb-4">
-            Olvidé mi Contraseña
+            Olvidé mi contraseña
         </h2>
 
         <v-form>
@@ -17,12 +17,12 @@
                 required
                 ></v-text-field>
 
-                <v-btn
-                    class="mt-4"
-                    block color="primary" large round
-                    @click="onSubmit"
-                    :loading="loading.submit"
-                    :disabled="loading.submit">Enviar enlace</v-btn>
+            <v-btn
+                class="mt-4 elevation-0"
+                block color="primary" large round
+                @click="onSubmit"
+                :loading="loading.submit"
+                :disabled="loading.submit">Enviar enlace</v-btn>
 
         </v-form>
 
@@ -51,18 +51,16 @@ export default {
             email: { required, email },
         }
     },
-    data(){
-        return {
-            alert : {},
-            show: false,
-            form: {
-                email: null,
-            },
-            loading: {
-                submit: false
-            }
+    data: () => ({
+        alert : {},
+        show: false,
+        form: {
+            email: null,
+        },
+        loading: {
+            submit: false
         }
-    },
+    }),
     computed: {
         emailErrors () {
             const errors = []

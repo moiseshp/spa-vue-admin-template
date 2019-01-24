@@ -3,7 +3,7 @@
     <layout-auth :alert="alert">
 
         <h2 class="text-xs-center headline font-weight-light mb-3">
-            Cambiar Contraseña
+            Cambiar contraseña
         </h2>
 
         <article class="text-xs-center mb-3">
@@ -11,7 +11,7 @@
                 <v-avatar>
                     <v-icon>account_circle</v-icon>
                 </v-avatar>
-                moises@nerdf.com &nbsp;
+                moiseseduardo.hp@gmail.com &nbsp;
             </v-chip>
         </article>
 
@@ -42,7 +42,7 @@
                 ></v-text-field>
 
             <v-btn
-                class="mt-4"
+                class="mt-4 elevation-0"
                 block color="primary" large round
                 @click="onSubmit"
                 :loading="loading.submit"
@@ -71,19 +71,17 @@ export default {
             repeatPassword: { sameAsPassword: sameAs('password') },
         }
     },
-    data(){
-        return {
-            alert : {},
-            show: false,
-            form: {
-                password: null,
-                repeatPassword: null,
-            },
-            loading: {
-                submit: false
-            }
+    data: () => ({
+        alert : {},
+        show: false,
+        form: {
+            password: null,
+            repeatPassword: null,
+        },
+        loading: {
+            submit: false
         }
-    },
+    }),
     computed: {
         passwordErrors () {
             const errors = []

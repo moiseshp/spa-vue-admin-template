@@ -1,6 +1,6 @@
 <template>
 
-    <v-app class="background-gradient white--text">
+    <v-app class="b-gradient-top white--text">
 
         <section class="layout-error">
 
@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style lang="styl">
+<style lang="stylus">
 .layout-error
     margin: 35px
     @media only screen and (min-width: 600px)

@@ -1,20 +1,23 @@
-// main.styl
+
 $body-font-family = 'Roboto', sans-serif
 
 @import '~vuetify/src/stylus/main.styl'
 
 #app,
 .theme--light.v-sheet,
+.theme--light.v-icon,
+.theme--light.v-list,
 .theme--light.v-input:not(.v-input--is-disabled) input, .theme--light.v-input:not(.v-input--is-disabled) textarea
-    color: $blue-grey.darken-4
+    color: $blue-grey.darken-3
+    // color: $red.base
 
 .theme--light.v-label,
-.theme--light.v-messages,
+.theme--light.v-messages
     color: $blue-grey.darken-1
 
 .theme--light.v-text-field--outline > .v-input__control > .v-input__slot,
 .theme--light.v-text-field > .v-input__control > .v-input__slot:before
-    border-color: $blue-grey.lighten-4
+    border-color: $blue-grey.lighten-3
 
 .theme--light.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot:hover
     border-color: $blue-grey.lighten-1
@@ -25,7 +28,10 @@ $body-font-family = 'Roboto', sans-serif
 .v-sheet
     // border-radius: 8px
 
-.background-gradient
-    &.theme--light
-        background: -moz-linear-gradient(top, var(--v-primary-lighten3), var(--v-primary-darken2) )
-        background: -webkit-linear-gradient(top, var(--v-primary-lighten3), var(--v-primary-darken2) )
+.theme--light
+    &.b-gradient-top
+        background:-moz-linear-gradient(top,$cyan.base,var(--v-primary-lighten1))
+        background:-webkit-linear-gradient(top,$cyan.base,var(--v-primary-lighten1))
+    &.b-gradient-left
+        background:-moz-linear-gradient(left,$cyan.base 40%,var(--v-primary-lighten1))
+        background:-webkit-linear-gradient(left,$cyan.base 40%,var(--v-primary-lighten1))

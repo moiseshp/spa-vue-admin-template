@@ -1,6 +1,6 @@
 <template>
     <layout-dashboard>
-        <h1>Dashboard</h1>
+        <h1>Usuarios</h1>
         <p>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
             eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -17,7 +17,7 @@
 import LayoutDashboard from '@/layouts/Dashboard.vue';
 
 export default {
-    name: 'Dashboard',
+    name: 'Index',
     components : {
         LayoutDashboard
     },

@@ -1,6 +1,6 @@
 <template>
 
-    <v-app class="background-gradient">
+    <v-app class="b-gradient-top">
 
         <section class="layout-auth">
 
@@ -20,7 +20,7 @@
 
                 <header class="mb-3 text-xs-center">
                     <router-link :to="{ name:'login' }">
-                        <img src="@/assets/logo.png" class="logo">
+                        <img src="@/assets/v-alt.svg" class="logo">
                     </router-link>
                 </header>
 
@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style lang="styl">
+<style lang="stylus">
 .layout-auth
 
     .wrapper-card
@@ -52,7 +52,7 @@ export default {
             padding: 45px
             border-radius: 8px
         .logo
-            max-width: 90px
+            max-width: 80px
         footer
             a
                 text-decoration: none

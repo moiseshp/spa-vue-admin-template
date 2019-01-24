@@ -7,13 +7,18 @@ export default new Router({
     mode: 'history',
     routes: [
         {
-            path: '/',
-            redirect: 'login'
+            path: '/users',
+            name: 'users-index',
+            component: () => import('@/components/users/Index.vue')
         },
         {
             path: '/dashboard',
             name: 'dashboard',
             component: () => import('@/components/Dashboard.vue')
+        },
+        {
+            path: '/',
+            redirect: 'login'
         },
         {
             path: '/login',

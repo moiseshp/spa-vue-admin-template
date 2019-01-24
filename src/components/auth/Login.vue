@@ -29,7 +29,7 @@
                 ></v-text-field>
 
             <v-btn
-                class="mt-4"
+                class="mt-4 elevation-0"
                 block color="primary" large round
                 @click="onSubmit"
                 :loading="loading.submit"
@@ -63,19 +63,17 @@ export default {
             password: { required, minLength: minLength(5) },
         }
     },
-    data(){
-        return {
-            alert : {},
-            show: false,
-            form: {
-                email: null,
-                password: null,
-            },
-            loading: {
-                submit: false
-            }
+    data: () => ({
+        alert : {},
+        show: false,
+        form: {
+            email: null,
+            password: null,
+        },
+        loading: {
+            submit: false
         }
-    },
+    }),
     computed: {
         emailErrors () {
             const errors = []

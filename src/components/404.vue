@@ -9,9 +9,9 @@
             Lo sentimos, la página que estás buscando no se pudo encontrar.
         </h5>
 
-        <div class="wrapper-image primary--text text--lighten-1">
+        <!-- <div class="wrapper-image primary--text text--lighten-1">
             :(
-        </div>
+        </div> -->
 
     </layout-error>
 
