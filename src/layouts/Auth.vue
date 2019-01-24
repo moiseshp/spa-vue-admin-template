@@ -1,8 +1,8 @@
 <template>
 
-    <v-app class="layout-auth">
+    <v-app class="background-gradient">
 
-        <section>
+        <section class="layout-auth">
 
             <v-alert
                 block
@@ -43,9 +43,6 @@ export default {
 
 <style lang="styl">
 .layout-auth
-    &.theme--light
-        background: -moz-linear-gradient(top, var(--v-primary-lighten4), var(--v-primary-darken2) )
-        background: -webkit-linear-gradient(top, var(--v-primary-lighten4), var(--v-primary-darken2) )
 
     .wrapper-card
         padding: 20px

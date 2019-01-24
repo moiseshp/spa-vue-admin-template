@@ -33,7 +33,7 @@ export default new Router({
         {
             path: '*',
             name: '404',
-            component: () => import('@/components/Error.vue'),
+            component: () => import('@/components/404.vue'),
         }
     ],
 })

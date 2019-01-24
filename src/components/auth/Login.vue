@@ -92,11 +92,6 @@ export default {
             return errors
         },
     },
-    created() {
-        // this.$emit('update:layout', LayoutAuth)
-        // console.log('Login')
-        // this.onSubmit()
-    },
     methods: {
         onSubmit(){
             console.log('submit!')
