@@ -72,24 +72,27 @@ export default {
     },
     methods: {
         onSubmit(){
-            console.log('submit!')
             this.$v.$touch()
-            if (this.$v.$invalid) {
-                this.alert = {
-                    value : true,
-                    type : 'error',
-                    message : 'Error message'
-                }
-                return
-            } else {
+            if (this.$v.$invalid) return
+            else {
                 // do your submit logic here
                 this.loading.submit = true
                 setTimeout(() => {
                     this.loading.submit = false
-                    this.alert = {
-                        value : true,
-                        type : 'info',
-                        message : 'Info message'
+
+                    if (false) {
+                        this.alert = {
+                            value: true,
+                            type: 'info',
+                            message: 'Un correo se ha enviado para proceder con el cambio.'
+                        }
+                    }
+                    else {
+                        this.alert = {
+                            value: true,
+                            type: 'error',
+                            message: 'Mensaje de error del servicio.'
+                        }
                     }
                 }, 1500)
             }

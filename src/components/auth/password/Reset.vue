@@ -6,49 +6,67 @@
             Cambiar contraseña
         </h2>
 
-        <article class="text-xs-center mb-3">
-            <v-chip color="primary lighten-4">
-                <v-avatar>
-                    <v-icon>account_circle</v-icon>
-                </v-avatar>
-                moiseseduardo.hp@gmail.com &nbsp;
-            </v-chip>
-        </article>
+        <div class="text-xs-center">
+            <v-progress-circular
+                v-if="loading.token"
+                class="mt-4"
+                color="primary" indeterminate>
+            </v-progress-circular>
+            <div v-if="!loading.token && !showForm">
+                <v-btn round class="elevation-0"
+                    :to="{ name: 'forgot-password' }">
+                    Intentar otra vez
+                </v-btn>
+            </div>
+        </div>
 
-        <v-form>
+        <section v-if="showForm">
 
-            <v-text-field
-                v-model="form.password"
-                :append-icon="show ? 'visibility_off' : 'visibility'"
-                :type="show ? 'text' : 'password'"
-                label="Nueva Contraseña"
-                @click:append="show = !show"
-                :error-messages="passwordErrors"
-                @input="$v.form.password.$touch()"
-                @blur="$v.form.password.$touch()"
-                required
-                ></v-text-field>
+            <article class="text-xs-center mb-3">
+                <v-chip color="primary lighten-4">
+                    <v-avatar>
+                        <v-icon>account_circle</v-icon>
+                    </v-avatar>
+                    moiseseduardo.hp@gmail.com &nbsp;
+                </v-chip>
+            </article>
 
-            <v-text-field
-                v-model="form.repeatPassword"
-                :append-icon="show ? 'visibility_off' : 'visibility'"
-                :type="show ? 'text' : 'password'"
-                label="Repite la Contraseña"
-                @click:append="show = !show"
-                :error-messages="repeatPasswordErrors"
-                @input="$v.form.repeatPassword.$touch()"
-                @blur="$v.form.repeatPassword.$touch()"
-                required
-                ></v-text-field>
+            <v-form>
 
-            <v-btn
-                class="mt-4 elevation-0"
-                block color="primary" large round
-                @click="onSubmit"
-                :loading="loading.submit"
-                :disabled="loading.submit">Cambiar contraseña</v-btn>
+                <v-text-field
+                    v-model="form.password"
+                    :append-icon="show ? 'visibility_off' : 'visibility'"
+                    :type="show ? 'text' : 'password'"
+                    label="Nueva Contraseña"
+                    @click:append="show = !show"
+                    :error-messages="passwordErrors"
+                    @input="$v.form.password.$touch()"
+                    @blur="$v.form.password.$touch()"
+                    required
+                    ></v-text-field>
 
-        </v-form>
+                <v-text-field
+                    v-model="form.repeatPassword"
+                    :append-icon="show ? 'visibility_off' : 'visibility'"
+                    :type="show ? 'text' : 'password'"
+                    label="Repite la Contraseña"
+                    @click:append="show = !show"
+                    :error-messages="repeatPasswordErrors"
+                    @input="$v.form.repeatPassword.$touch()"
+                    @blur="$v.form.repeatPassword.$touch()"
+                    required
+                    ></v-text-field>
+
+                <v-btn
+                    class="mt-4 elevation-0"
+                    block color="primary" large round
+                    @click="onSubmit"
+                    :loading="loading.submit"
+                    :disabled="loading.submit">Cambiar contraseña</v-btn>
+
+            </v-form>
+
+        </section>
 
     </layout-auth>
 
@@ -74,14 +92,38 @@ export default {
     data: () => ({
         alert : {},
         show: false,
+        showForm: false,
+        token : null,
         form: {
             password: null,
             repeatPassword: null,
         },
         loading: {
+            token: true,
             submit: false
         }
     }),
+    created() {
+
+        this.token = this.$route.params.token
+        console.log(this.token )
+
+        setTimeout(() => {
+
+            this.loading.token = false
+
+            if (false) {
+                this.showForm = true
+            }
+            else {
+                this.alert = {
+                    value : true,
+                    type : 'error',
+                    message : 'No existe el token enviado o ya caducó'
+                }
+            }
+        }, 1500 )
+    },
     computed: {
         passwordErrors () {
             const errors = []
@@ -99,24 +141,23 @@ export default {
     },
     methods: {
         onSubmit(){
-            console.log('submit!')
             this.$v.$touch()
-            if (this.$v.$invalid) {
-                this.alert = {
-                    value : true,
-                    type : 'error',
-                    message : 'Error message'
-                }
-                return
-            } else {
+            if (this.$v.$invalid) return
+            else {
                 // do your submit logic here
                 this.loading.submit = true
                 setTimeout(() => {
                     this.loading.submit = false
-                    this.alert = {
-                        value : true,
-                        type : 'info',
-                        message : 'Info message'
+
+                    if ( true ) {
+                        this.alert = {
+                            value : true,
+                            type : 'info',
+                            message : 'El cambio fue satisfactorio!'
+                        }
+                    }
+                    else {
+
                     }
                 }, 1500)
             }

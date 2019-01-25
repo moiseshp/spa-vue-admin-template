@@ -26,9 +26,7 @@
 
         </v-toolbar>
 
-        <v-navigation-drawer
-            width="280"
-            v-model="sidebar" app>
+        <v-navigation-drawer width="280" v-model="sidebar" app>
 
             <v-toolbar flat class="transparent">
                 <v-list class="pa-0">
@@ -50,41 +48,44 @@
 
             <v-list class="pt-3 sidebar-items">
 
-                <v-list-tile :to="{ name : 'dashboard' }">
-                    <v-list-tile-action>
-                        <v-icon>dashboard</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>Dashboard</v-list-tile-title>
-                </v-list-tile>
+                <div v-for="item in items" :key="item.title">
 
-                     <v-list-group
-                       v-for="item in items"
-                       v-model="item.active"
-                       :key="item.title"
-                       :prepend-icon="item.action"
-                       no-action
-                     >
-                       <v-list-tile slot="activator">
-                         <v-list-tile-content>
-                           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                         </v-list-tile-content>
-                       </v-list-tile>
+                    <v-list-group
+                        v-if="item.items.length"
+                        :prepend-icon="item.action"
+                        :value="true"
+                        no-action>
 
-                       <v-list-tile
-                         v-for="subItem in item.items"
-                         :key="subItem.title"
-                         @click=""
-                       >
-                         <v-list-tile-content>
-                           <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
-                         </v-list-tile-content>
+                        <v-list-tile slot="activator">
+                            <v-list-tile-content>
+                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
 
-                         <v-list-tile-action>
-                           <v-icon>{{ subItem.action }}</v-icon>
-                         </v-list-tile-action>
-                       </v-list-tile>
-                     </v-list-group>
+                        <v-list-tile
+                            v-for="subItem in item.items"
+                            :key="subItem.title"
+                            @click="">
 
+                            <v-list-tile-content>
+                                <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+                            </v-list-tile-content>
+
+                            <v-list-tile-action>
+                                <v-icon>{{ subItem.action }}</v-icon>
+                            </v-list-tile-action>
+
+                        </v-list-tile>
+                    </v-list-group>
+
+                    <v-list-tile v-else :to="{ name: item.to }">
+                        <v-list-tile-action>
+                            <v-icon v-text="item.action"></v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-title v-text="item.title"></v-list-tile-title>
+                    </v-list-tile>
+
+                </div>
             </v-list>
 
         </v-navigation-drawer>
@@ -122,17 +123,20 @@ export default {
         sidebar: false,
         items: [
             {
-              action: 'people',
-              title: 'Users',
-              items: [
-                { title: 'Lista de Usuarios' },
-                { title: 'Crear Usuario' },
-              ]
+                action: 'dashboard',
+                title: 'Dashboard',
+                to: 'dashboard',
+                items: []
+            },
+            {
+                action: 'people',
+                title: 'Users',
+                to: 'users-index',
+                items: []
             },
             {
               action: 'restaurant',
               title: 'Dining',
-              active: false,
               items: [
                 { title: 'Breakfast & brunch' },
                 { title: 'New American' },
@@ -186,14 +190,31 @@ export default {
 <style lang="stylus">
 @import '~vuetify/src/stylus/settings/_colors'
 .theme--light
+    .v-content__wrap
+        background-color: rgba($blue-grey.lighten-5,0.1)
+
     &.v-navigation-drawer
-        box-shadow: 0 0 12px rgba(#000,.1)
+        box-shadow: 0 0 10px rgba($blue-grey.darken-4,.1)
+
     &.sidebar-items
 
         &.v-list
             .v-list__group__header .v-icon,
             div[role="listitem"] .v-list__tile__action .v-icon
                 font-size: 18px
+
+            .v-list__group__header__prepend-icon
+                .v-icon.theme--light
+                    margin: 0 auto
+                    margin-right: -13px
+
+            div[role="listitem"] .v-list__tile__action .v-icon
+                margin: 0 auto
+
+            div[role="listitem"] .v-list__tile__action .v-icon,
+            .v-list__group__header__prepend-icon
+                .v-icon.theme--light
+                    color: $blue-grey.darken-4
 
         .v-list__group
             .v-list__group__header__prepend-icon
@@ -204,7 +225,7 @@ export default {
         .v-list__group__items
             .v-list__tile__content
                 .v-list__tile__title
-                    color: $blue-grey.base
+                    color: $blue-grey.darken-1
                     font-weight: 400
 
     .v-navigation-drawer__border

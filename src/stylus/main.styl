@@ -3,41 +3,47 @@ $body-font-family = 'Roboto', sans-serif
 
 @import '~vuetify/src/stylus/main.styl'
 
-#app,
-.theme--light.v-sheet,
-.theme--light.v-icon,
-.theme--light.v-list,
-.theme--light.v-input:not(.v-input--is-disabled) input, .theme--light.v-input:not(.v-input--is-disabled) textarea
-    color: $blue-grey.darken-3
-
-.theme--light.v-label,
-.theme--light.v-messages
-    color: $blue-grey.darken-1
-
-.theme--light.v-list .v-list__group--active:before,
-.theme--light.v-list .v-list__group--active:after
-    background: $blue-grey.lighten-5
-
-.theme--light.v-divider
-    border-color: $blue-grey.lighten-5
-
-.theme--light.v-text-field--outline > .v-input__control > .v-input__slot,
-.theme--light.v-text-field > .v-input__control > .v-input__slot:before
-    border-color: $blue-grey.lighten-3 !important
-
-.theme--light.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot:hover
-    border-color: $blue-grey.lighten-1
-
-.theme--light.v-text-field--outline.v-input--is-focused > .v-input__control > .v-input__slot
-    border-color: var(--v-primary-base)
-
-.v-sheet
-    // border-radius: 8px
-
+#app
+    color: $blue-grey.darken-4
 .theme--light
+    &.v-sheet,
+    &.v-icon,
+    &.v-list,
+    &.v-btn,
+    &.v-input:not(.v-input--is-disabled) input,
+    &.v-input:not(.v-input--is-disabled) textarea
+        color: $blue-grey.darken-4
+
+    &.v-label,
+    &.v-messages,
+    &.v-list .v-list__tile__sub-title
+        color: $blue-grey.darken-1
+
+    &.theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat),
+    &.v-list .v-list__group--active:before,
+    &.v-list .v-list__group--active:after
+        background: $blue-grey.lighten-5
+
+    &.v-divider
+        border-color: $blue-grey.lighten-5
+
+    &.v-text-field--outline > .v-input__control > .v-input__slot,
+    &.v-text-field > .v-input__control > .v-input__slot:before
+        border-color: $blue-grey.lighten-3 !important
+
+    &.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot:hover
+        border-color: $blue-grey.lighten-1
+
+    &.v-text-field--outline.v-input--is-focused > .v-input__control > .v-input__slot
+        border-color: var(--v-primary-base)
+
     &.b-gradient-top
         background:-moz-linear-gradient(top,$cyan.base,var(--v-primary-lighten1))
         background:-webkit-linear-gradient(top,$cyan.base,var(--v-primary-lighten1))
     &.b-gradient-left
         background:-moz-linear-gradient(left,$cyan.base 40%,var(--v-primary-lighten1))
         background:-webkit-linear-gradient(left,$cyan.base 40%,var(--v-primary-lighten1))
+
+.text-decoration-none
+    &, &.a
+        text-decoration: none

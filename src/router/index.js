@@ -12,7 +12,7 @@ export default new Router({
             component: () => import('@/components/users/Index.vue')
         },
         {
-            path: '/',
+            path: '/home',
             name: 'dashboard',
             component: () => import('@/components/Dashboard.vue')
         },

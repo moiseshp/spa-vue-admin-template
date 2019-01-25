@@ -92,30 +92,27 @@ export default {
     },
     methods: {
         onSubmit(){
-            console.log('submit!')
             this.$v.$touch()
-            if (this.$v.$invalid) {
-                this.alert = {
-                    value : true,
-                    type : 'error',
-                    message : 'Error message'
-                }
-                return
-            } else {
+            if (this.$v.$invalid) return
+            else {
                 // do your submit logic here
                 this.loading.submit = true
                 setTimeout(() => {
                     this.loading.submit = false
-                    this.alert = {
-                        value : true,
-                        type : 'info',
-                        message : 'Info message'
+
+                    if ( true ) {
+                        this.alert = {
+                            value : true,
+                            type : 'error',
+                            message : 'Mensaje personalizado desde el servicio'
+                        }
+                    }
+                    else {
+                        this.$router.push({ name: 'dashboard' });
                     }
                 }, 1500)
             }
             console.log(this.form)
-            // this.$router.push({ name: 'dashboard' });
-            // this.$router.dashboard;
             // axios.post('login',data)
             //      .then(response => {
             //     console.log(response.data[0])

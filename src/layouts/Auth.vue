@@ -43,7 +43,6 @@ export default {
 
 <style lang="stylus">
 .layout-auth
-
     .wrapper-card
         padding: 20px
         @media only screen and (min-width: 600px)
