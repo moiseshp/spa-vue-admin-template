@@ -7,7 +7,7 @@
         </h2>
 
         <article class="text-xs-center mb-3">
-            <v-chip color="blue-grey lighten-4">
+            <v-chip color="primary lighten-4">
                 <v-avatar>
                     <v-icon>account_circle</v-icon>
                 </v-avatar>

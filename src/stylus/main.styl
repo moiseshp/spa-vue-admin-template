@@ -9,15 +9,21 @@ $body-font-family = 'Roboto', sans-serif
 .theme--light.v-list,
 .theme--light.v-input:not(.v-input--is-disabled) input, .theme--light.v-input:not(.v-input--is-disabled) textarea
     color: $blue-grey.darken-3
-    // color: $red.base
 
 .theme--light.v-label,
 .theme--light.v-messages
     color: $blue-grey.darken-1
 
+.theme--light.v-list .v-list__group--active:before,
+.theme--light.v-list .v-list__group--active:after
+    background: $blue-grey.lighten-5
+
+.theme--light.v-divider
+    border-color: $blue-grey.lighten-5
+
 .theme--light.v-text-field--outline > .v-input__control > .v-input__slot,
 .theme--light.v-text-field > .v-input__control > .v-input__slot:before
-    border-color: $blue-grey.lighten-3
+    border-color: $blue-grey.lighten-3 !important
 
 .theme--light.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot:hover
     border-color: $blue-grey.lighten-1

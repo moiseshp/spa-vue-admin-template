@@ -6,7 +6,7 @@
             fixed app clipped-right>
             <v-toolbar-side-icon
                 class="white--text"
-                @click.stop="openDrawerMenu"></v-toolbar-side-icon>
+                @click.stop="sidebar = !sidebar"></v-toolbar-side-icon>
 
             <v-spacer></v-spacer>
 
@@ -26,7 +26,9 @@
 
         </v-toolbar>
 
-        <v-navigation-drawer :mini-variant="mini" v-model="drawer" app>
+        <v-navigation-drawer
+            width="280"
+            v-model="sidebar" app>
 
             <v-toolbar flat class="transparent">
                 <v-list class="pa-0">
@@ -38,7 +40,7 @@
                             <v-toolbar-title>Vuetify JS</v-toolbar-title>
                         </v-list-tile-content>
                         <v-list-tile-action class="hidden-lg-and-up">
-                            <v-btn icon @click.stop="drawer = !drawer">
+                            <v-btn icon @click.stop="sidebar = !sidebar">
                                 <v-icon>close</v-icon>
                             </v-btn>
                         </v-list-tile-action>
@@ -46,18 +48,43 @@
                 </v-list>
             </v-toolbar>
 
-            <v-list class="pt-0 sidebar-items">
-                <v-list-tile
-                    v-for="item in items"
-                    :key="item.title"
-                    :to="{ name: item.to }">
+            <v-list class="pt-3 sidebar-items">
+
+                <v-list-tile :to="{ name : 'dashboard' }">
                     <v-list-tile-action>
-                        <v-icon>{{ item.icon }}</v-icon>
+                        <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    </v-list-tile-content>
+                    <v-list-tile-title>Dashboard</v-list-tile-title>
                 </v-list-tile>
+
+                     <v-list-group
+                       v-for="item in items"
+                       v-model="item.active"
+                       :key="item.title"
+                       :prepend-icon="item.action"
+                       no-action
+                     >
+                       <v-list-tile slot="activator">
+                         <v-list-tile-content>
+                           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                         </v-list-tile-content>
+                       </v-list-tile>
+
+                       <v-list-tile
+                         v-for="subItem in item.items"
+                         :key="subItem.title"
+                         @click=""
+                       >
+                         <v-list-tile-content>
+                           <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
+                         </v-list-tile-content>
+
+                         <v-list-tile-action>
+                           <v-icon>{{ subItem.action }}</v-icon>
+                         </v-list-tile-action>
+                       </v-list-tile>
+                     </v-list-group>
+
             </v-list>
 
         </v-navigation-drawer>
@@ -92,37 +119,66 @@ export default {
         UserDropdown
     },
     data: () => ({
-        drawer: true,
-        mini: true,
+        sidebar: false,
         items: [
-            { title: 'Dashboard', icon: 'dashboard', to: 'dashboard' },
-            { title: 'Usuarios', icon: 'account_circle', to: 'users-index' },
-        ],
+            {
+              action: 'people',
+              title: 'Users',
+              items: [
+                { title: 'Lista de Usuarios' },
+                { title: 'Crear Usuario' },
+              ]
+            },
+            {
+              action: 'restaurant',
+              title: 'Dining',
+              active: false,
+              items: [
+                { title: 'Breakfast & brunch' },
+                { title: 'New American' },
+                { title: 'Sushi' }
+              ]
+            },
+            {
+              action: 'content_cut',
+              title: 'Office',
+              items: [
+                { title: 'List Item' }
+              ]
+            },
+            {
+              action: 'local_offer',
+              title: 'Promotions',
+              items: [
+                { title: 'List Item' }
+              ]
+            }
+          ]
     }),
     watch: {
-        mini() {
-            if ( this.$vuetify.breakpoint.mdAndDown ) {
-                this.mini = false
-            }
-        }
+        // mini() {
+        //     if ( this.$vuetify.breakpoint.mdAndDown ) {
+        //         this.mini = false
+        //     }
+        // }
     },
     created(){
-        this.mini = true
-        this.drawer = true
+        // this.mini = true
+        this.sidebar = true
         if ( this.$vuetify.breakpoint.mdAndDown ) {
-            this.drawer = false
+            this.sidebar = false
         }
     },
     methods: {
-        openDrawerMenu() {
-            if ( this.$vuetify.breakpoint.mdAndDown ) {
-                this.mini = false
-                this.drawer = true
-            }
-            else {
-                this.mini = !this.mini
-            }
-        }
+        // openDrawerMenu() {
+        //     if ( this.$vuetify.breakpoint.mdAndDown ) {
+        //         this.mini = false
+        //         this.drawer = true
+        //     }
+        //     else {
+        //         this.mini = !this.mini
+        //     }
+        // }
     }
 }
 </script>
@@ -133,9 +189,25 @@ export default {
     &.v-navigation-drawer
         box-shadow: 0 0 12px rgba(#000,.1)
     &.sidebar-items
-        .v-list__tile__title,
-        .v-list__tile__action .v-icon
-            color: $blue-grey.darken-2
+
+        &.v-list
+            .v-list__group__header .v-icon,
+            div[role="listitem"] .v-list__tile__action .v-icon
+                font-size: 18px
+
+        .v-list__group
+            .v-list__group__header__prepend-icon
+                .v-list__tile__title,
+                .v-icon
+                    color: $blue-grey.darken-2
+
+        .v-list__group__items
+            .v-list__tile__content
+                .v-list__tile__title
+                    color: $blue-grey.base
+                    font-weight: 400
+
     .v-navigation-drawer__border
         width: 0
+
 </style>

@@ -12,13 +12,9 @@ export default new Router({
             component: () => import('@/components/users/Index.vue')
         },
         {
-            path: '/dashboard',
+            path: '/',
             name: 'dashboard',
             component: () => import('@/components/Dashboard.vue')
-        },
-        {
-            path: '/',
-            redirect: 'login'
         },
         {
             path: '/login',
