@@ -27,7 +27,7 @@
         </v-form>
 
         <footer class="text-xs-center mt-4">
-            <router-link :to="{ name:'login' }">
+            <router-link to="login">
                 &larr; Volver</router-link>
         </footer>
 

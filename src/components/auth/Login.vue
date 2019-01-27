@@ -38,7 +38,7 @@
         </v-form>
 
         <footer class="text-xs-center mt-4">
-            <router-link :to="{ name:'forgot-password' }">
+            <router-link to="forgot-password">
                 ¿Olvidaste tu contraseña?</router-link>
         </footer>
 
@@ -50,7 +50,7 @@
 import LayoutAuth from '@/layouts/Auth.vue'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
-
+import { AUTH_REQUEST } from '@/store/actions/auth'
 export default {
     name: 'Login',
     components : {
@@ -97,33 +97,12 @@ export default {
             else {
                 // do your submit logic here
                 this.loading.submit = true
-                setTimeout(() => {
-                    this.loading.submit = false
-
-                    if ( true ) {
-                        this.alert = {
-                            value : true,
-                            type : 'error',
-                            message : 'Mensaje personalizado desde el servicio'
-                        }
-                    }
-                    else {
-                        this.$router.push({ name: 'dashboard' });
-                    }
-                }, 1500)
+                // const { username, password } = this
+                this.$store.dispatch(AUTH_REQUEST,this.form).then(() => {
+                    this.$router.push('dashboard')
+                })
             }
-            console.log(this.form)
-            // axios.post('login',data)
-            //      .then(response => {
-            //     console.log(response.data[0])
-            // });
         }
-        // beforeRouteEnter (to, from, next) {
-        //     if (localStorage.getItem('jwt')) {
-        //         return next('board');
-        //     }
-        //     next();
-        // }
     }
 }
 </script>

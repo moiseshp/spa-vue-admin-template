@@ -31,7 +31,7 @@
 
             <v-card-actions class="text-left">
                 <v-btn flat round color="primary" @click="menu = false">Mi Perfil</v-btn>
-                <v-btn flat round @click="menu = false">Cerrar Sesión</v-btn>
+                <logout/>
             </v-card-actions>
 
         </v-card>
@@ -41,10 +41,13 @@
 </template>
 
 <script>
+import Logout from '../auth/Logout'
 export default {
+    components : {
+        Logout
+    },
     data:() => ({
         menu : null,
-        fav : null
     })
 }
 </script>

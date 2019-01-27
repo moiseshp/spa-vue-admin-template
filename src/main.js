@@ -4,14 +4,21 @@ window.axios = require('axios')
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 window.axios.defaults.baseURL = process.env.API_URL
 
+const token = localStorage.getItem('token')
+console.log('token',token)
+if (token) {
+    axios.defaults.headers.common['Authorization'] = token
+    // let user = JSON.parse(localStorage.getItem('user'))
+}
+
 import Vue from 'vue'
+import App from './App'
 import router from './router'
+import store from './store'
 import Vuetify from 'vuetify'
 import Vuelidate from 'vuelidate'
 // import 'vuetify/dist/vuetify.min.css'
 import './stylus/main.styl'
-
-import App from './App'
 
 Vue.use(Vuelidate)
 Vue.use(Vuetify,{
@@ -36,6 +43,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

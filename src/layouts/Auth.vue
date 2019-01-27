@@ -19,7 +19,7 @@
                 :class="{ 'mt-5' : $vuetify.breakpoint.smAndUp }">
 
                 <header class="mb-3 text-xs-center">
-                    <router-link :to="{ name:'login' }">
+                    <router-link to="login">
                         <img src="@/assets/v-alt.svg" class="logo">
                     </router-link>
                 </header>
