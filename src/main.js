@@ -5,10 +5,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 window.axios.defaults.baseURL = process.env.API_URL
 
 const token = localStorage.getItem('token')
-console.log('token',token)
 if (token) {
     axios.defaults.headers.common['Authorization'] = token
-    // let user = JSON.parse(localStorage.getItem('user'))
 }
 
 import Vue from 'vue'

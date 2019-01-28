@@ -1,6 +1,6 @@
 <template>
 
-    <layout-auth :alert="alert">
+    <layout-auth>
 
         <h2 class="text-xs-center headline font-weight-light mb-3">
             Cambiar contraseña

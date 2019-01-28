@@ -1,6 +1,6 @@
 <template>
 
-    <layout-auth :alert="alert">
+    <layout-auth>
 
         <h2 class="text-xs-center headline font-weight-light mb-4">
             Ingresa a tu cuenta</h2>
@@ -13,8 +13,7 @@
                 :error-messages="emailErrors"
                 @input="$v.form.email.$touch()"
                 @blur="$v.form.email.$touch()"
-                required
-                ></v-text-field>
+                required></v-text-field>
 
             <v-text-field
                 v-model="form.password"
@@ -25,20 +24,19 @@
                 :error-messages="passwordErrors"
                 @input="$v.form.password.$touch()"
                 @blur="$v.form.password.$touch()"
-                required
-                ></v-text-field>
+                required></v-text-field>
 
             <v-btn
                 class="mt-4 elevation-0"
                 block color="primary" large round
                 @click="onSubmit"
-                :loading="loading.submit"
-                :disabled="loading.submit">Ingresar</v-btn>
+                :loading="loading"
+                :disabled="loading">Ingresar</v-btn>
 
         </v-form>
 
         <footer class="text-xs-center mt-4">
-            <router-link to="forgot-password">
+            <router-link to="password/reset">
                 ¿Olvidaste tu contraseña?</router-link>
         </footer>
 
@@ -47,10 +45,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import LayoutAuth from '@/layouts/Auth.vue'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
-import { AUTH_REQUEST } from '@/store/actions/auth'
 export default {
     name: 'Login',
     components : {
@@ -64,25 +62,22 @@ export default {
         }
     },
     data: () => ({
-        alert : {},
         show: false,
         form: {
             email: null,
             password: null,
         },
-        loading: {
-            submit: false
-        }
     }),
     computed: {
-        emailErrors () {
+        ...mapState('auth',['loading']),
+        emailErrors() {
             const errors = []
             if (!this.$v.form.email.$dirty) return errors
             !this.$v.form.email.email && errors.push('Must be valid e-mail')
             !this.$v.form.email.required && errors.push('E-mail is required')
             return errors
         },
-        passwordErrors () {
+        passwordErrors() {
             const errors = []
             if (!this.$v.form.password.$dirty) return errors
             !this.$v.form.password.minLength && errors.push('Name must be at most 10 characters  long')
@@ -90,21 +85,29 @@ export default {
             return errors
         },
     },
+    created(){
+        console.log(this.$route.query.redirect)
+    },
     methods: {
         onSubmit(){
             this.$v.$touch()
             if (this.$v.$invalid) return
             else {
-                // do your submit logic here
-                this.loading.submit = true
-                // const { username, password } = this
-                this.$store.dispatch(AUTH_REQUEST,this.form).then(() => {
-                    this.$router.push('dashboard')
+                this.$store.dispatch('auth/login',this.form)
+                .then(() => {
+                    let redirect = this.$route.query.redirect
+                    if ( redirect == undefined ) {
+                        this.$router.push('dashboard')
+                    }
+                    else {
+                        this.$router.push( redirect )
+                    }
+                })
+                .catch(()=>{
+                    console.log('component/login')
                 })
             }
         }
     }
 }
 </script>
-<style>
-</style>

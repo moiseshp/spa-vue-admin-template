@@ -1,6 +1,6 @@
 <template>
 
-    <layout-auth :alert="alert">
+    <layout-auth>
 
         <h2 class="text-xs-center headline font-weight-light mb-4">
             Olvidé mi contraseña
@@ -27,7 +27,7 @@
         </v-form>
 
         <footer class="text-xs-center mt-4">
-            <router-link to="login">
+            <router-link to="/login">
                 &larr; Volver</router-link>
         </footer>
 

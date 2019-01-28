@@ -8,7 +8,7 @@
         left>
 
         <v-btn flat class="white--text" slot="activator">
-            <strong class="text-lowercase">moiseseduardo.hp@gmail.com</strong>
+            <strong class="text-lowercase">{{ user.email }}</strong>
             <v-icon right>account_circle</v-icon>
         </v-btn>
 
@@ -18,9 +18,9 @@
 
                     <v-list-tile-content>
                         <v-list-tile-title class="font-weight-bold">
-                            Moisés Huaringa</v-list-tile-title>
+                            {{ user.name }}</v-list-tile-title>
                         <v-list-tile-sub-title>
-                            moiseseduardo.hp@gmail.com
+                            {{ user.email }}
                         </v-list-tile-sub-title>
                     </v-list-tile-content>
 
@@ -42,12 +42,18 @@
 
 <script>
 import Logout from '../auth/Logout'
+
 export default {
     components : {
         Logout
     },
     data:() => ({
         menu : null,
-    })
+    }),
+    computed: {
+        user(){
+            return this.$store.getters['auth/user']
+        }
+    }
 }
 </script>

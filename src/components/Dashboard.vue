@@ -21,9 +21,5 @@ export default {
     components : {
         LayoutDashboard
     },
-    // created() {
-    //     this.$emit('update:layout', LayoutDashboard);
-    //     console.log('Home')
-    // },
 }
 </script>

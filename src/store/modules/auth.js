@@ -1,74 +1,73 @@
-import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth'
-// import { USER_REQUEST } from '../actions/user'
-
 const state = {
     token: localStorage.getItem('token') || '',
     status: '',
-    user: {},
-    hasLoadedOnce: false
+    loading: false
 }
 
 const getters = {
     isAuthenticated: state => !!state.token,
-    authStatus: state => state.status,
+    user(state){
+        if (state.token) {
+            return JSON.parse(localStorage.getItem('user'))
+        }
+    }
 }
 
 const actions = {
-    [AUTH_REQUEST]: ({commit, dispatch}, user) => {
+    login: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
-            commit(AUTH_REQUEST)
-            // apiCall({url: 'auth', data: user, method: 'POST'})
-            // console.log(this.form)
+            commit('loading',true)
             axios.post('login',user)
             .then(resp => {
-                console.log('resp',resp.data)
                 localStorage.setItem('token', resp.data.token)
                 localStorage.setItem('user',JSON.stringify(resp.data))
                 // Here set the header of your ajax library to the token value.
-                // example with axios
                 axios.defaults.headers.common['Authorization'] = resp.data.token
-                commit(AUTH_SUCCESS,resp.data)
-                // dispatch(USER_REQUEST)
+                commit('login',resp.data)
                 resolve(resp)
             })
             .catch(err => {
-                console.log('err',err.response)
-                commit(AUTH_ERROR, err.data)
-                localStorage.removeItem('token')
+                console.log('module/auth')
+                // commit(error, err.data)
                 reject(err)
             })
+            .finally(() => { commit('loading',false) })
         })
     },
-    [AUTH_LOGOUT]: ({commit, dispatch}) => {
+    logout: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
-            commit(AUTH_LOGOUT)
+            commit('loading',true)
             localStorage.removeItem('token')
+            localStorage.removeItem('user')
             delete axios.defaults.headers.common['Authorization']
+            commit('logout')
+            commit('loading',false)
             resolve()
         })
     }
 }
 
 const mutations = {
-    [AUTH_REQUEST]: (state) => {
-        state.status = 'loading'
+    loading: (state,status) => {
+        state.loading = status
     },
-    [AUTH_SUCCESS]: (state, resp) => {
-        state.status = 'success'
+    login: (state, resp) => {
         state.token = resp.token
         state.user = resp
-        state.hasLoadedOnce = true
     },
-    [AUTH_ERROR]: (state) => {
-        state.status = 'error'
-        state.hasLoadedOnce = true
-    },
-    [AUTH_LOGOUT]: (state) => {
+    logout: (state) => {
         state.token = ''
     }
+    // request: (state) => {
+    //     state.status = 'loading'
+    // },
+    // error: (state) => {
+    //     state.status = 'error'
+    // },
 }
 
 export default {
+    namespaced: true,
     state,
     getters,
     actions,

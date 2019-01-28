@@ -1,24 +1,22 @@
 <template>
 
-    <v-btn flat round @click="logout">Cerrar Sesión</v-btn>
+    <v-btn flat round
+        :loading="loading"
+        :disabled="loading"
+        @click="logout">Cerrar Sesión</v-btn>
 
 </template>
 
 <script>
-import { AUTH_LOGOUT } from '@/store/actions/auth'
+import { mapState } from 'vuex';
 export default {
     name: 'Logout',
-    data: () => ({
-        loading: {
-            submit: false
-        }
-    }),
-    computed : {
-        isLoggedIn(){ return this.$store.getters.isLoggedIn }
+    computed: {
+        ...mapState('auth',['loading']),
     },
     methods: {
         logout(){
-            this.$store.dispatch(AUTH_LOGOUT)
+            this.$store.dispatch('auth/logout')
             .then(() => {
                 this.$router.push('/login')
             })

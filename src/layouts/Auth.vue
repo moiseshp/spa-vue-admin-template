@@ -4,14 +4,14 @@
 
         <section class="layout-auth">
 
-            <v-alert
+            <!-- <v-alert
                 block
                 class="my-0"
                 :value="alert.value"
                 :type="alert.type"
                 transition="fade-transition">
                 {{ alert.message }}
-            </v-alert>
+            </v-alert> -->
 
             <v-card
                 elevation="0"
@@ -37,7 +37,7 @@
 <script>
 export default {
     name: 'LayoutAuth',
-    props: ['alert'],
+    // props: ['alert'],
 }
 </script>
 

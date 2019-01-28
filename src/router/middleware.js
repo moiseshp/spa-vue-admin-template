@@ -1,13 +1,10 @@
-
 import store from '../store' // your vuex store
-
-const authenticated = false
 
 var middleware = {
 
     auth: (to, from, next) => {
         //  User is not authenticated
-        if (store.getters.isAuthenticated) {
+        if (store.getters['auth/isAuthenticated']) {
             next()
             return
         }
@@ -18,7 +15,7 @@ var middleware = {
     },
     guest: (to, from, next) => {
         //  User is authenticated
-        if (store.getters.isAuthenticated) {
+        if (store.getters['auth/isAuthenticated']) {
             next('dashboard')
             return
         }
