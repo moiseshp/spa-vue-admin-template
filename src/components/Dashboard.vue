@@ -1,5 +1,5 @@
 <template>
-    <layout-dashboard>
+    <layout-admin>
         <h1>Dashboard</h1>
         <p>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
@@ -10,16 +10,16 @@
         </p>
 
 
-    </layout-dashboard>
+    </layout-admin>
 </template>
 
 <script>
-import LayoutDashboard from '@/layouts/Dashboard.vue';
+import LayoutAdmin from '@/layouts/Admin.vue';
 
 export default {
     name: 'Dashboard',
     components : {
-        LayoutDashboard
+        LayoutAdmin
     },
 }
 </script>

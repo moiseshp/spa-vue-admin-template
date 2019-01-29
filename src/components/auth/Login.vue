@@ -93,15 +93,8 @@ export default {
                 this.$store.dispatch('auth/login',this.form)
                 .then(() => {
                     let redirect = this.$route.query.redirect
-                    if ( redirect == undefined ) {
-                        this.$router.push('dashboard')
-                    }
-                    else {
-                        this.$router.push( redirect )
-                    }
-                })
-                .catch(()=>{
-                    console.log('component/login')
+                    let to = (redirect == undefined) ? 'dashboard' : redirect
+                    this.$router.push('dashboard')
                 })
             }
         }

@@ -12,22 +12,22 @@
                 class="mt-4"
                 color="primary" indeterminate>
             </v-progress-circular>
-            <div v-if="!loading.token && !showForm">
+            <!-- <div v-if="!loading.token && !email">
                 <v-btn round class="elevation-0"
                     :to="{ name: 'forgot-password' }">
                     Intentar otra vez
                 </v-btn>
-            </div>
+            </div> -->
         </div>
 
-        <section v-if="showForm">
+        <section v-if="email">
 
             <article class="text-xs-center mb-3">
-                <v-chip color="primary lighten-4">
+                <v-chip color="blue-grey lighten-5 elevation-0">
                     <v-avatar>
                         <v-icon>account_circle</v-icon>
                     </v-avatar>
-                    moiseseduardo.hp@gmail.com &nbsp;
+                    {{ email }}&nbsp;
                 </v-chip>
             </article>
 
@@ -46,14 +46,14 @@
                     ></v-text-field>
 
                 <v-text-field
-                    v-model="form.repeatPassword"
+                    v-model="form.password_confirmation"
                     :append-icon="show ? 'visibility_off' : 'visibility'"
                     :type="show ? 'text' : 'password'"
                     label="Repite la Contraseña"
                     @click:append="show = !show"
-                    :error-messages="repeatPasswordErrors"
-                    @input="$v.form.repeatPassword.$touch()"
-                    @blur="$v.form.repeatPassword.$touch()"
+                    :error-messages="password_confirmationErrors"
+                    @input="$v.form.password_confirmation.$touch()"
+                    @blur="$v.form.password_confirmation.$touch()"
                     required
                     ></v-text-field>
 
@@ -86,17 +86,17 @@ export default {
     validations: {
         form: {
             password: { required, minLength: minLength(6) },
-            repeatPassword: { sameAsPassword: sameAs('password') },
+            password_confirmation: { sameAsPassword: sameAs('password') },
         }
     },
     data: () => ({
-        alert : {},
         show: false,
         showForm: false,
         token : null,
+        email : null,
         form: {
             password: null,
-            repeatPassword: null,
+            password_confirmation: null,
         },
         loading: {
             token: true,
@@ -106,23 +106,21 @@ export default {
     created() {
 
         this.token = this.$route.params.token
+
         console.log(this.token )
-
-        setTimeout(() => {
-
+        axios.get('password/reset/'+this.token)
+        .then(resp => {
             this.loading.token = false
+            this.email = resp.data.email
+            this.form.token = this.token
+             console.log(resp)
+        })
+        .catch(err => {
+            // No pasó validación: Se redirecciona al usuario
+            console.log(err)
+            this.$router.push({ name : '404' })
+        })
 
-            if (false) {
-                this.showForm = true
-            }
-            else {
-                this.alert = {
-                    value : true,
-                    type : 'error',
-                    message : 'No existe el token enviado o ya caducó'
-                }
-            }
-        }, 1500 )
     },
     computed: {
         passwordErrors () {
@@ -132,10 +130,10 @@ export default {
             !this.$v.form.password.minLength && errors.push('Min 6 letters')
             return errors
         },
-        repeatPasswordErrors () {
+        password_confirmationErrors () {
             const errors = []
-            if (!this.$v.form.repeatPassword.$dirty) return errors
-            !this.$v.form.repeatPassword.sameAsPassword && errors.push('Las contraseñas no coinciden')
+            if (!this.$v.form.password_confirmation.$dirty) return errors
+            !this.$v.form.password_confirmation.sameAsPassword && errors.push('Las contraseñas no coinciden')
             return errors
         },
     },
@@ -145,21 +143,10 @@ export default {
             if (this.$v.$invalid) return
             else {
                 // do your submit logic here
-                this.loading.submit = true
-                setTimeout(() => {
-                    this.loading.submit = false
-
-                    if ( true ) {
-                        this.alert = {
-                            value : true,
-                            type : 'info',
-                            message : 'El cambio fue satisfactorio!'
-                        }
-                    }
-                    else {
-
-                    }
-                }, 1500)
+                axios.post('password/reset',this.form)
+                .then(resp => {
+                    console.log(resp)
+                })
             }
         }
         // beforeRouteEnter (to, from, next) {

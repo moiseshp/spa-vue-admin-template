@@ -10,7 +10,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-toolbar-items class="hidden-sm-and-down">
+            <v-toolbar-items>
 
                 <v-btn icon class="white--text">
                     <v-icon>dashboard</v-icon>
@@ -112,7 +112,7 @@
 import UserDropdown from '../components/navbar/UserDropdown.vue';
 
 export default {
-    name: 'LayoutDashboard',
+    name: 'LayoutAdmin',
     props: {
         source: String
     },

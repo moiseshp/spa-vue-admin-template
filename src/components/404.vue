@@ -6,7 +6,7 @@
             404
         </h2>
         <h5 class="headline font-weight-light">
-            Lo sentimos, la página que estás buscando no se pudo encontrar.
+            Lo sentimos, la página que estás buscando no se encuentra disponible.
         </h5>
 
         <!-- <div class="wrapper-image primary--text text--lighten-1">

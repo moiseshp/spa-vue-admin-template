@@ -10,15 +10,20 @@
         left>
 
         <v-list class="pa-0 transparent white--text" slot="activator">
-            <v-list-tile avatar>
-                <v-list-tile-content class="white--text">
-                    <v-list-tile-title class="font-weight-bold text-lowercase">
+            <v-list-tile class="list-tile-user">
+                <v-list-tile-avatar
+                    class="breakpoint"
+                    :style="$vuetify.breakpoint.smAndDown ? 'min-width:auto':''">
+                    <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                </v-list-tile-avatar>
+                <v-list-tile-content class="white--text hidden-sm-and-down">
+                    <v-list-tile-title class="text-lowercase">
                         {{ user.email }}
                     </v-list-tile-title>
                 </v-list-tile-content>
-                <v-list-tile-avatar>
-                    <img src="https://randomuser.me/api/portraits/men/85.jpg">
-                </v-list-tile-avatar>
+                <v-btn icon class="white--text hidden-sm-and-down">
+                    <v-icon>keyboard_arrow_down</v-icon>
+                </v-btn>
             </v-list-tile>
         </v-list>
 
@@ -73,3 +78,9 @@ export default {
     }
 }
 </script>
+
+<style lang="stylus">
+.list-tile-user > .v-list__tile {
+    padding-right: 0 !important
+}
+</style>

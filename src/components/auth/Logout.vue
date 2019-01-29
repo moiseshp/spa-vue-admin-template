@@ -21,10 +21,9 @@ export default {
         logout(){
             this.$store.dispatch('auth/logout')
             .then( resp => {
-                console.log(resp)
                 this.$store.commit('snackbar/show',{
                     text: resp.data.message,
-                    color: 'info'
+                    color: 'success'
                 })
             })
             .finally(() => {

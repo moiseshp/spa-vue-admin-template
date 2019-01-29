@@ -21,8 +21,8 @@
                 class="mt-4 elevation-0"
                 block color="primary" large round
                 @click="onSubmit"
-                :loading="loading.submit"
-                :disabled="loading.submit">Enviar enlace</v-btn>
+                :loading="loading"
+                :disabled="loading">Enviar enlace</v-btn>
 
         </v-form>
 
@@ -52,14 +52,11 @@ export default {
         }
     },
     data: () => ({
-        alert : {},
         show: false,
         form: {
             email: null,
         },
-        loading: {
-            submit: false
-        }
+        loading : false
     }),
     computed: {
         emailErrors () {
@@ -75,38 +72,15 @@ export default {
             this.$v.$touch()
             if (this.$v.$invalid) return
             else {
-                // do your submit logic here
-                this.loading.submit = true
-                setTimeout(() => {
-                    this.loading.submit = false
-
-                    if (false) {
-                        this.alert = {
-                            value: true,
-                            type: 'info',
-                            message: 'Un correo se ha enviado para proceder con el cambio.'
-                        }
-                    }
-                    else {
-                        this.alert = {
-                            value: true,
-                            type: 'error',
-                            message: 'Mensaje de error del servicio.'
-                        }
-                    }
-                }, 1500)
+                axios.post('password/email',this.form)
+                .then(resp => {
+                     console.log(resp)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
             }
-            // axios.post('login',data)
-            //      .then(response => {
-            //     console.log(response.data[0])
-            // });
         }
-        // beforeRouteEnter (to, from, next) {
-        //     if (localStorage.getItem('jwt')) {
-        //         return next('board');
-        //     }
-        //     next();
-        // }
     }
 }
 </script>
