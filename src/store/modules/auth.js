@@ -10,6 +10,7 @@ const getters = {
         if (state.token) {
             return JSON.parse(localStorage.getItem('user'))
         }
+        return {}
     }
 }
 
@@ -19,11 +20,12 @@ const actions = {
             commit('loading',true)
             axios.post('login',user)
             .then(resp => {
-                localStorage.setItem('token', resp.data.token)
+                let token = resp.data.token
+                localStorage.setItem('token',token)
                 localStorage.setItem('user',JSON.stringify(resp.data))
                 // Here set the header of your ajax library to the token value.
-                axios.defaults.headers.common['Authorization'] = resp.data.token
-                commit('login',resp.data)
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+                commit('login',token)
                 resolve(resp)
             })
             .catch(err => {
@@ -37,12 +39,16 @@ const actions = {
     logout: ({commit, dispatch}) => {
         return new Promise((resolve, reject) => {
             commit('loading',true)
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
-            delete axios.defaults.headers.common['Authorization']
-            commit('logout')
-            commit('loading',false)
-            resolve()
+            axios.post('logout')
+            .then( resp => {
+                commit('logout')
+                localStorage.removeItem('token')
+                delete axios.defaults.headers.common['Authorization']
+                resolve()
+            })
+            .finally(() => {
+                commit('loading',false)
+            })
         })
     }
 }
@@ -51,9 +57,8 @@ const mutations = {
     loading: (state,status) => {
         state.loading = status
     },
-    login: (state, resp) => {
-        state.token = resp.token
-        state.user = resp
+    login: (state,token) => {
+        state.token = token
     },
     logout: (state) => {
         state.token = ''

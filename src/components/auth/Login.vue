@@ -85,9 +85,6 @@ export default {
             return errors
         },
     },
-    created(){
-        console.log(this.$route.query.redirect)
-    },
     methods: {
         onSubmit(){
             this.$v.$touch()
