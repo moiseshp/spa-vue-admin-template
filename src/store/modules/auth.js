@@ -40,14 +40,12 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit('loading',true)
             axios.post('logout')
-            .then( resp => {
+            .finally(() => {
                 commit('logout')
                 localStorage.removeItem('token')
                 delete axios.defaults.headers.common['Authorization']
-                resolve()
-            })
-            .finally(() => {
                 commit('loading',false)
+                resolve()
             })
         })
     }

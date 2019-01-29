@@ -1,6 +1,9 @@
 <template>
 
-    <v-btn flat round
+    <v-btn
+        flat
+        class="pa-2"
+        color="cyan lighten-2"
         :loading="loading"
         :disabled="loading"
         @click="logout">Cerrar Sesión</v-btn>
@@ -17,6 +20,13 @@ export default {
     methods: {
         logout(){
             this.$store.dispatch('auth/logout')
+            .then( resp => {
+                console.log(resp)
+                this.$store.commit('snackbar/show',{
+                    text: resp.data.message,
+                    color: 'info'
+                })
+            })
             .finally(() => {
                 this.$router.push('/login')
             })
