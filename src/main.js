@@ -8,7 +8,7 @@ window.axios.defaults.baseURL = process.env.API_URL
 const token = localStorage.getItem('token')
 
 if (token) {
-    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+    window.axios.defaults.headers.common['Authorization'] = token
 }
 
 import Vue from 'vue'
@@ -27,7 +27,6 @@ Vue.use(Vuetify,{
     },
     theme: {
         // primary: '#1375F7',
-
         // secondary: '#FC0',
         // accent: '#FC0',
         // error: '#f44336',

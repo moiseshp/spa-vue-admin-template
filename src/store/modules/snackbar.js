@@ -8,11 +8,14 @@ const state = {
 const getters = {}
 
 const actions = {
-    closeAfter:({commit, dispatch}) => {
+    show:({commit, dispatch},snackbar) => {
         return new Promise((resolve, reject) => {
+
+            commit('show',snackbar)
+
             setTimeout(function () {
                 commit('close')
-            }, 8000);
+            }, 7000)
         })
     }
 }

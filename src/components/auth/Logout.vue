@@ -15,13 +15,13 @@ import { mapState } from 'vuex';
 export default {
     name: 'Logout',
     computed: {
-        ...mapState('auth',['loading']),
+        ...mapState('login',['loading']),
     },
     methods: {
         logout(){
-            this.$store.dispatch('auth/logout')
+            this.$store.dispatch('login/logout')
             .then( resp => {
-                this.$store.commit('snackbar/show',{
+                this.$store.dispatch('snackbar/show',{
                     text: resp.data.message,
                     color: 'success'
                 })

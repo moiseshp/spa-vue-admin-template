@@ -39,7 +39,7 @@
 import LayoutAuth from '@/layouts/Auth.vue'
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
-
+import { mapState } from 'vuex';
 export default {
     name: 'Login',
     components : {
@@ -56,9 +56,9 @@ export default {
         form: {
             email: null,
         },
-        loading : false
     }),
     computed: {
+        ...mapState('login',['loading']),
         emailErrors () {
             const errors = []
             if (!this.$v.form.email.$dirty) return errors
@@ -72,12 +72,13 @@ export default {
             this.$v.$touch()
             if (this.$v.$invalid) return
             else {
-                axios.post('password/email',this.form)
+                this.$store.dispatch('forgotPassword/forgot',this.form)
                 .then(resp => {
-                     console.log(resp)
-                })
-                .catch(err => {
-                    console.log(err)
+                    this.$store.dispatch('snackbar/show',{
+                        text: resp.data.message,
+                        color: 'success'
+                    })
+                    this.$router.push('/login')
                 })
             }
         }

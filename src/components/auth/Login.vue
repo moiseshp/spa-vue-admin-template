@@ -69,7 +69,7 @@ export default {
         },
     }),
     computed: {
-        ...mapState('auth',['loading']),
+        ...mapState('login',['loading']),
         emailErrors() {
             const errors = []
             if (!this.$v.form.email.$dirty) return errors
@@ -90,11 +90,11 @@ export default {
             this.$v.$touch()
             if (this.$v.$invalid) return
             else {
-                this.$store.dispatch('auth/login',this.form)
+                this.$store.dispatch('login/login',this.form)
                 .then(() => {
                     let redirect = this.$route.query.redirect
-                    let to = (redirect == undefined) ? 'dashboard' : redirect
-                    this.$router.push('dashboard')
+                    let to = (redirect == undefined) ? '/dashboard' : redirect
+                    this.$router.push(to)
                 })
             }
         }

@@ -1,6 +1,5 @@
 const state = {
     token: localStorage.getItem('token') || '',
-    status: '',
     loading: false
 }
 
@@ -20,17 +19,15 @@ const actions = {
             commit('loading',true)
             axios.post('login',user)
             .then(resp => {
-                let token = resp.data.token
+                let token = resp.data.access_token
                 localStorage.setItem('token',token)
                 localStorage.setItem('user',JSON.stringify(resp.data))
                 // Here set the header of your ajax library to the token value.
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+                axios.defaults.headers.common['Authorization'] = token
                 commit('login',token)
                 resolve(resp)
             })
             .catch(err => {
-                console.log('module/auth')
-                // commit(error, err.data)
                 reject(err)
             })
             .finally(() => { commit('loading',false) })
@@ -63,12 +60,6 @@ const mutations = {
     logout: (state) => {
         state.token = ''
     }
-    // request: (state) => {
-    //     state.status = 'loading'
-    // },
-    // error: (state) => {
-    //     state.status = 'error'
-    // },
 }
 
 export default {

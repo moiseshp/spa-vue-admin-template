@@ -48,12 +48,12 @@ const auth = [
     {
         path: '/password/reset',
         name: 'forgot-password',
-        component: () => import('@/components/auth/password/Forgot.vue'),
+        component: () => import('@/components/auth/ForgotPassword.vue'),
     },
     {
         path: '/password/reset/:token',
         name: 'reset-password',
-        component: () => import('@/components/auth/password/Reset.vue')
+        component: () => import('@/components/auth/ResetPassword.vue')
     }
 ]
 

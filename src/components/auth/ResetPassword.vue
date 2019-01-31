@@ -8,26 +8,20 @@
 
         <div class="text-xs-center">
             <v-progress-circular
-                v-if="loading.token"
-                class="mt-4"
+                v-if="loading.findToken"
+                class="mt-4 text-xs-center"
                 color="primary" indeterminate>
             </v-progress-circular>
-            <!-- <div v-if="!loading.token && !email">
-                <v-btn round class="elevation-0"
-                    :to="{ name: 'forgot-password' }">
-                    Intentar otra vez
-                </v-btn>
-            </div> -->
         </div>
 
-        <section v-if="email">
+        <section v-if="form.email">
 
             <article class="text-xs-center mb-3">
                 <v-chip color="blue-grey lighten-5 elevation-0">
-                    <v-avatar>
+                    <v-avatar class="mr-1">
                         <v-icon>account_circle</v-icon>
                     </v-avatar>
-                    {{ email }}&nbsp;
+                    {{ form.email }}&nbsp;
                 </v-chip>
             </article>
 
@@ -76,7 +70,7 @@
 import LayoutAuth from '@/layouts/Auth.vue'
 import { validationMixin } from 'vuelidate'
 import { required, sameAs, minLength } from 'vuelidate/lib/validators'
-
+import { mapState } from 'vuex';
 export default {
     name: 'Login',
     components : {
@@ -91,38 +85,25 @@ export default {
     },
     data: () => ({
         show: false,
-        showForm: false,
-        token : null,
-        email : null,
         form: {
+            email: null,
+            token: null,
             password: null,
             password_confirmation: null,
-        },
-        loading: {
-            token: true,
-            submit: false
         }
     }),
     created() {
 
-        this.token = this.$route.params.token
+        this.form.token = this.$route.params.token
 
-        console.log(this.token )
-        axios.get('password/reset/'+this.token)
-        .then(resp => {
-            this.loading.token = false
-            this.email = resp.data.email
-            this.form.token = this.token
-             console.log(resp)
-        })
-        .catch(err => {
-            // No pasó validación: Se redirecciona al usuario
-            console.log(err)
-            this.$router.push({ name : '404' })
+        this.$store.dispatch('resetPassword/findToken',this.form.token)
+        .then((resp) => {
+            this.form.email = resp.data.email
         })
 
     },
     computed: {
+        ...mapState('resetPassword',['loading']),
         passwordErrors () {
             const errors = []
             if (!this.$v.form.password.$dirty) return errors
@@ -142,19 +123,16 @@ export default {
             this.$v.$touch()
             if (this.$v.$invalid) return
             else {
-                // do your submit logic here
-                axios.post('password/reset',this.form)
+                this.$store.dispatch('resetPassword/reset',this.form)
                 .then(resp => {
-                    console.log(resp)
+                    this.$store.dispatch('snackbar/show',{
+                        text: resp.data.message,
+                        color: 'success'
+                    })
+                    this.$router.push('/login')
                 })
             }
         }
-        // beforeRouteEnter (to, from, next) {
-        //     if (localStorage.getItem('jwt')) {
-        //         return next('board');
-        //     }
-        //     next();
-        // }
     }
 }
 </script>

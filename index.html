@@ -3,24 +3,36 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-    <title>Vue + Vuetify</title>
+    <title>Admin Vue + Vuetify</title>
+    <link rel="icon" href="logo.png">
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
     <style media="screen">
         [v-cloak] > * { display:none }
         [v-cloak]::before {
             content:"";
-            background-color: #FFF;
-            background-image: url('http://saas.mesa247.io/images/speed.gif');
-            background-repeat: no-repeat;
-            background-position: center center;
             position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
+            right: 50%;
+            top: 50%;
+            width: 30px;
+        	height: 30px;
+            margin-right: -15px;
+            margin-top: -15px;
+            clear: both;
+            border: 5px #DDD solid;
+        	border-top: 5px #488fef solid;
+        	border-radius: 50%;
+        	-webkit-animation: spCircRot .6s infinite linear;
+        	animation: spCircRot .6s infinite linear;
+        }
+        @-webkit-keyframes spCircRot {
+        	from { -webkit-transform: rotate(0deg); }
+        	to { -webkit-transform: rotate(359deg); }
+        }
+        @keyframes spCircRot {
+        	from { transform: rotate(0deg); }
+        	to { transform: rotate(359deg); }
         }
     </style>
-
 </head>
 <body>
     <div id="app" v-cloak></div>

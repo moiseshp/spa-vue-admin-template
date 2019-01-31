@@ -31,14 +31,36 @@ export default {
         })
     },
     created: function () {
-        this.$store.watch(state => state.snackbar.visible, () => {
-            this.$store.dispatch('snackbar/closeAfter')
-        })
+        // this.$store.watch(state => state.snackbar.visible, () => {
+        //     this.$store.dispatch('snackbar/closeAfter')
+        // })
         const self = this
-        axios.interceptors.response.use(undefined, function (err) {
+
+        axios.interceptors.response.use(function (resp) {
+            if ( process.env.NODE_ENV == 'development' ){
+                console.info( '/// LOG INTERCEPTORS. Only Development ///' )
+                console.log( resp )
+            }
+            return resp
+        }, function (err) {
+
             return new Promise(function (resolve, reject) {
 
-                self.$store.commit('snackbar/show',{
+                if ( process.env.NODE_ENV == 'development' ){
+                    console.info( '///// ERR!!! /////' )
+                    console.log( err, err.response )
+                }
+
+                if (err.response.status === 404){
+                    self.$router.push({ name:'404'})
+                }
+
+                if (err.response.status === 401){
+                    self.$router.dispatch('login/logout')
+                    self.$router.push({ name:'login'})
+                }
+
+                self.$store.dispatch('snackbar/show',{
                     text: err.response.data.message,
                     color: 'error'
                 })

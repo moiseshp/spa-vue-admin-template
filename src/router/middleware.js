@@ -4,7 +4,7 @@ var middleware = {
 
     auth: (to, from, next) => {
         //  User is not authenticated
-        if (store.getters['auth/isAuthenticated']) {
+        if (store.getters['login/isAuthenticated']) {
             next()
             return
         }
@@ -15,7 +15,7 @@ var middleware = {
     },
     guest: (to, from, next) => {
         //  User is authenticated
-        if (store.getters['auth/isAuthenticated']) {
+        if (store.getters['login/isAuthenticated']) {
             next('dashboard')
             return
         }

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import snackbar from './modules/snackbar'
-// import auth from './modules/auth'
-import auth from './modules/auth/auth'
+import login from './modules/auth/login'
 import forgotPassword from './modules/auth/forgotPassword'
+import resetPassword from './modules/auth/resetPassword'
 
 Vue.use(Vuex)
 
@@ -12,8 +12,9 @@ const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
     modules: {
         snackbar,
-        auth,
-        forgotPassword
+        login,
+        forgotPassword,
+        resetPassword
     },
     strict: debug,
 })

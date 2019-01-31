@@ -14,10 +14,10 @@
                 <v-list-tile-avatar
                     class="breakpoint"
                     :style="$vuetify.breakpoint.smAndDown ? 'min-width:auto':''">
-                    <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                    <img :src="user.avatar">
                 </v-list-tile-avatar>
                 <v-list-tile-content class="white--text hidden-sm-and-down">
-                    <v-list-tile-title class="text-lowercase">
+                    <v-list-tile-title class="font-weight-bold ext-lowercase body-1">
                         {{ user.email }}
                     </v-list-tile-title>
                 </v-list-tile-content>
@@ -31,12 +31,9 @@
             <v-list>
                 <v-list-tile avatar>
                     <v-list-tile-content>
-                        <v-list-tile-sub-title>
-                            {{ user.name }}
-                        </v-list-tile-sub-title>
-                        <v-list-tile-title class="font-weight-bold">
-                            {{ user.email }}
-                        </v-list-tile-title>
+                        <v-list-tile-sub-title>{{ user.name }}</v-list-tile-sub-title>
+                        <v-list-tile-title
+                            class="font-weight-bold">{{ user.email }}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
@@ -48,9 +45,6 @@
                 <v-divider></v-divider>
                 <logout/>
             </v-list>
-            <!-- <v-card-actions class="text-left">
-                <v-btn flat round color="primary" @click="menu = false">Mi Perfil</v-btn>
-            </v-card-actions> -->
         </v-card>
 
     </v-menu>
@@ -73,7 +67,7 @@ export default {
     }),
     computed: {
         user(){
-            return this.$store.getters['auth/user']
+            return this.$store.getters['login/user']
         }
     }
 }
