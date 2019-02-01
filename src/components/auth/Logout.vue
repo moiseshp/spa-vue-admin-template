@@ -1,9 +1,8 @@
 <template>
 
     <v-btn
-        flat
-        class="pa-2"
-        color="cyan lighten-2"
+        class="pa-2 elevation-0"
+        color="blue-grey--text text--darken-3"
         :loading="loading"
         :disabled="loading"
         @click="logout">Cerrar Sesión</v-btn>

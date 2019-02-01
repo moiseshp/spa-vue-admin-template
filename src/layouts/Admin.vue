@@ -51,6 +51,7 @@
                 <div v-for="item in items" :key="item.title">
 
                     <v-list-group
+                        class="blue-grey--text text--darken-3"
                         v-if="item.items.length"
                         :prepend-icon="item.action"
                         :value="true"
@@ -63,6 +64,7 @@
                         </v-list-tile>
 
                         <v-list-tile
+                            class="blue-grey--text"
                             v-for="subItem in item.items"
                             :key="subItem.title"
                             @click="">
@@ -78,7 +80,8 @@
                         </v-list-tile>
                     </v-list-group>
 
-                    <v-list-tile v-else :to="{ name: item.to }">
+                    <v-list-tile v-else :to="{ name: item.to }"
+                        class="blue-grey--text text--darken-3">
                         <v-list-tile-action>
                             <v-icon v-text="item.action"></v-icon>
                         </v-list-tile-action>
@@ -159,30 +162,11 @@ export default {
             }
           ]
     }),
-    watch: {
-        // mini() {
-        //     if ( this.$vuetify.breakpoint.mdAndDown ) {
-        //         this.mini = false
-        //     }
-        // }
-    },
     created(){
-        // this.mini = true
         this.sidebar = true
         if ( this.$vuetify.breakpoint.mdAndDown ) {
             this.sidebar = false
         }
-    },
-    methods: {
-        // openDrawerMenu() {
-        //     if ( this.$vuetify.breakpoint.mdAndDown ) {
-        //         this.mini = false
-        //         this.drawer = true
-        //     }
-        //     else {
-        //         this.mini = !this.mini
-        //     }
-        // }
     }
 }
 </script>
@@ -214,19 +198,19 @@ export default {
             div[role="listitem"] .v-list__tile__action .v-icon,
             .v-list__group__header__prepend-icon
                 .v-icon.theme--light
-                    color: $blue-grey.darken-4
+                    color: $blue-grey.darken-3
 
-        .v-list__group
-            .v-list__group__header__prepend-icon
-                .v-list__tile__title,
-                .v-icon
-                    color: $blue-grey.darken-2
-
-        .v-list__group__items
-            .v-list__tile__content
-                .v-list__tile__title
-                    color: $blue-grey.darken-1
-                    font-weight: 400
+        // .v-list__group
+        //     .v-list__group__header__prepend-icon
+        //         .v-list__tile__title,
+        //         .v-icon
+        //             color: $blue-grey.darken-2
+        //
+        // .v-list__group__items
+        //     .v-list__tile__content
+        //         .v-list__tile__title
+        //             color: $blue-grey.darken-1
+        //             font-weight: 400
 
     .v-navigation-drawer__border
         width: 0

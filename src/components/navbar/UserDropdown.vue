@@ -3,11 +3,8 @@
     <v-menu
         v-model="menu"
         :close-on-content-click="false"
-        :min-width="250"
-        offset-y
-        nudge-bottom="4"
-        dark
-        left>
+        :min-width="280"
+        offset-x offset-y bottom>
 
         <v-list class="pa-0 transparent white--text" slot="activator">
             <v-list-tile class="list-tile-user">
@@ -27,9 +24,9 @@
             </v-list-tile>
         </v-list>
 
-        <v-card elevation="1">
+        <v-card>
             <v-list>
-                <v-list-tile avatar>
+                <v-list-tile>
                     <v-list-tile-content>
                         <v-list-tile-sub-title>{{ user.name }}</v-list-tile-sub-title>
                         <v-list-tile-title
@@ -38,7 +35,7 @@
                 </v-list-tile>
             </v-list>
             <v-divider></v-divider>
-            <v-list class="pt-0 pb-0">
+            <v-list class="pt-0 pb-0 blue-grey--text text--darken-3">
                 <change-password/>
                 <v-divider></v-divider>
                 <profile/>
@@ -74,7 +71,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.list-tile-user > .v-list__tile {
+.list-tile-user > .v-list__tile
     padding-right: 0 !important
-}
 </style>
