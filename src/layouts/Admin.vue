@@ -95,7 +95,7 @@
 
         <v-content>
 
-            <v-container fluid>
+            <v-container fluid class="mb-5">
                 <slot/>
             </v-container>
 

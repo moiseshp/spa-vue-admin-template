@@ -1,41 +1,50 @@
 <template>
 
-    <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
+    <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        scrollable>
 
-        <v-card>
-        <v-card-title>
-          <span class="headline">{{ formTitle }}</span>
-        </v-card-title>
+        <v-btn slot="activator" color="primary" round class="elevation-0">New User</v-btn>
 
-        <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
+        <v-card tile>
+            <v-toolbar card color="b-gradient-left white--text">
+                <v-btn icon dark @click="close">
+                    <v-icon>close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Create User</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn dark flat @click="onSubmit">Guardar</v-btn>
+                </v-toolbar-items>
+            </v-toolbar>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-          <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
-        </v-card-actions>
-      </v-card>
+            <v-card-text class="pa-4">
+
+                <v-form>
+
+                    <v-text-field
+                        v-model="form.name"
+                        label="Nombre"
+                        required></v-text-field>
+
+                    <v-text-field
+                        v-model="form.last_name"
+                        label="Last Name"
+                        required></v-text-field>
+
+                    <v-text-field
+                        v-model="form.email"
+                        label="Email"
+                        required></v-text-field>
+
+                </v-form>
+
+            </v-card-text>
+
+        </v-card>
     </v-dialog>
 
 </template>
@@ -43,57 +52,25 @@
 <script>
 export default {
     data: () => ({
-       dialog: false,
-       desserts: [],
-       editedIndex: -1,
-       editedItem: {
-         name: '',
-         calories: 0,
-         fat: 0,
-         carbs: 0,
-         protein: 0
-       },
-       defaultItem: {
-         name: '',
-         calories: 0,
-         fat: 0,
-         carbs: 0,
-         protein: 0
-       }
-     }),
-
-     computed: {
-       formTitle () {
-         return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-       }
-     },
-
-     watch: {
-       dialog (val) {
-         val || this.close()
-       }
-     },
-
-     methods: {
-       close () {
-         this.dialog = false
-         setTimeout(() => {
-           this.editedItem = Object.assign({}, this.defaultItem)
-           this.editedIndex = -1
-         }, 300)
-       },
-
-       save () {
-           console.log('save child')
-           this.$emit('create',this.editedItem)
-         // if (this.editedIndex > -1) {
-         //   Object.assign(this.desserts[this.editedIndex], this.editedItem)
-         // } else {
-         //   this.desserts.push(this.editedItem)
-         // }
-         this.close()
-       }
-     }
+        dialog: false,
+        form: {},
+    }),
+    methods: {
+        close() {
+            this.dialog = false
+            this.form = Object.assign({},{})
+        },
+        onSubmit() {
+            console.log('submit')
+            this.$emit('create',this.form)
+            // Object.assign(this.desserts[this.editedIndex], this.editedItem)
+            axios.post('users/store',this.form)
+            .then(resp => {
+                console.log(resp)
+                this.close()
+            })
+        },
+    }
 }
 </script>
 

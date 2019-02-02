@@ -4,6 +4,7 @@
         v-model="menu"
         :close-on-content-click="false"
         :min-width="280"
+        :nudge-width="100"
         offset-x offset-y bottom>
 
         <v-list class="pa-0 transparent white--text" slot="activator">
@@ -23,10 +24,14 @@
                 </v-btn>
             </v-list-tile>
         </v-list>
-
         <v-card>
-            <v-list>
-                <v-list-tile>
+            <v-list class="py-0">
+                <v-list-tile
+                    class="blue-grey lighten-5 py-2"
+                    avatar>
+                    <v-list-tile-avatar>
+                        <img :src="user.avatar">
+                    </v-list-tile-avatar>
                     <v-list-tile-content>
                         <v-list-tile-sub-title>{{ user.name }}</v-list-tile-sub-title>
                         <v-list-tile-title
@@ -34,13 +39,10 @@
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
-            <v-divider></v-divider>
-            <v-list class="pt-0 pb-0 blue-grey--text text--darken-3">
+            <v-list class="blue-grey--text text--darken-3">
                 <change-password/>
-                <v-divider></v-divider>
                 <profile/>
-                <v-divider></v-divider>
-                <logout/>
+                <logout class="mb-0"/>
             </v-list>
         </v-card>
 

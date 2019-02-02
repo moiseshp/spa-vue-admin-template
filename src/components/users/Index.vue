@@ -2,67 +2,48 @@
     <layout-admin>
         <v-toolbar flat color="white" class="elevation-1">
             <v-toolbar-title>Usuarios</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <create @create="desserts.push($event)"/>
-         </v-toolbar>
-         <v-data-table
-           :headers="headers"
-           :items="desserts"
-           class="elevation-1"
-         >
-           <template slot="items" slot-scope="props">
-             <td>{{ props.item.name }}</td>
-             <td class="text-xs-right">{{ props.item.last_name }}</td>
-             <td class="text-xs-right">{{ props.item.email }}</td>
-             <td class="text-xs-right">{{ props.item.carbs }}</td>
-             <td class="text-xs-right">{{ props.item.protein }}</td>
-             <td class="justify-center layout px-0">
-               <v-icon
-                 small
-                 class="mr-2"
-                 @click="editItem(props.item)"
-               >
-                 edit
-               </v-icon>
-               <v-icon
-                 small
-                 @click="deleteItem(props.item)"
-               >
-                 delete
-               </v-icon>
-             </td>
-           </template>
-           <template slot="no-data">
-             <v-btn color="primary" @click="initialize">Reset</v-btn>
-           </template>
-         </v-data-table>
-</layout-admin>
+            <v-spacer></v-spacer>
+            <create @store="desserts.unshift($event)"/>
+        </v-toolbar>
+        <v-data-table :headers="headers" :items="desserts"class="elevation-1">
+            <template slot="items" slot-scope="props">
+                <td>{{ props.item.name }}</td>
+                <td>{{ props.item.last_name }}</td>
+                <td>{{ props.item.email }}</td>
+                <td class="justify-center layout">
+                    <edit :uuid="props.item.uuid"
+                        @update="Object.assign(desserts[desserts.indexOf(props.item)],$event)"/>
+                    <destroy :uuid="props.item.uuid"/>
+                </td>
+            </template>
+            <template slot="no-data">
+                <v-btn color="primary" @click="initialize">Reset</v-btn>
+            </template>
+        </v-data-table>
+    </layout-admin>
 </template>
 
 <script>
-import LayoutAdmin from '@/layouts/Admin.vue'
-import Create from './Create.vue'
+import LayoutAdmin from '@/layouts/Admin'
+import Create from './Create'
+import Edit from './Edit'
+import Destroy from './Destroy'
 
 export default {
     name: 'Index',
     components: {
         LayoutAdmin,
-        Create
+        Create,
+        Edit,
+        Destroy,
     },
     data: () => ({
-       dialog: false,
-       headers: [
-         {
-           text: 'Dessert (100g serving)',
-           align: 'left',
-           sortable: false,
-           value: 'name'
-         },
-         { text: 'Calories', value: 'calories' },
-         { text: 'Fat (g)', value: 'fat' },
-         { text: 'Carbs (g)', value: 'carbs' },
-         { text: 'Protein (g)', value: 'protein' },
-         { text: 'Actions', value: 'name', sortable: false }
+        dialog: false,
+        headers: [
+            { text: 'Name', value: 'name' },
+            { text: 'Last Name', value: 'last_name' },
+            { text: 'Email', value: 'email' },
+            { text: 'Actions', value: 'name', sortable: false, align: 'center' }
        ],
        desserts: [],
        editedIndex: -1,
